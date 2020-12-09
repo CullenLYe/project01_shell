@@ -3,8 +3,8 @@ by Jacky Chen, Vincent Jiang, and Cullen Ye\
 TNPG: The Three Musketeers
 
 ### Features:
-- Forks and executes commands!
-- Parses multiple commands on one line!
+- Forks and executes commands.
+- Parses multiple commands on one line.
 
 ---
 
