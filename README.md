@@ -1,5 +1,5 @@
 ## DWSH
-by Jacky Chen, Vincent Jiang, and Cullen Ye
+by Jacky Chen, Vincent Jiang, and Cullen Ye\
 TNPG: The Three Musketeers
 
 ### Features:
