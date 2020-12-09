@@ -29,7 +29,9 @@ int main() {
       if (!f) { // Child Process [This execvp's the user's input.]
         if (!strncmp(buffer, "cd", 2)) { // Checks to see if the user used "cd".
           char *dir = buffer+3; // Takes out the directory after the command "cd".
-          chdir(dir); // Changes directory.
+          if (chdir(dir)) { // Changes directory.
+            printf("No such directory: '%s'\n", dir);
+          };
         }
         else {
           char **args = parse_args(buffer);
