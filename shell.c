@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <limits.h>
 
 char ** parse_args(char *line) {
   char **args = malloc(sizeof(char*)*100);
@@ -17,7 +18,9 @@ char ** parse_args(char *line) {
 
 int main() {
     while (1) {
-      printf("$: "); // Shell prompt.
+      char cwd[PATH_MAX];
+      getcwd(cwd, sizeof(cwd));
+      printf("~%s$ ", cwd); // Shell prompt with current working directory.
       char buffer[100];
       fgets(buffer, sizeof(buffer), stdin); // Receives input from user.
       size_t len = strlen(buffer)-1;
