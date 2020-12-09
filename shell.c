@@ -15,6 +15,24 @@ char ** parse_args(char *line) {
   return args;
 }
 
+// function for separating multiple commands on one line 
+char ** semi_sep(char *line) {
+  char **commands = malloc(sizeof(char*)*100);
+  char *p;
+  p = strtok(line, ";");
+  int i = 0;
+  while (p!=NULL) {
+    commands[i] = p;
+    p = strtok(NULL, ";");
+    i++;
+  }
+  return commands;
+}
+
+// removes " " from front and end of string
+char * str_trim(char *line) {
+}
+
 int main() {
     while (1) {
       printf("$: "); // Shell prompt.
@@ -25,15 +43,22 @@ int main() {
       if (!strcmp(buffer, "exit")) exit(0); // If input is "exit", then exit program.
 
       int f, status;
-      f = fork();
-      if (!f) { // Child Process [This execvp's the user's input.]
-        char **args = parse_args(buffer);
-        execvp(args[0], args);
+      char **commands = semi_sep(buffer);
+      int i;
+      for (i = 0; commands[i]!=NULL; i++) {
+        f = fork();
+        if (!f) { // Child Process [This execvp's the user's input.]
+          char **args = parse_args(commands[i]);
+          //char *str = str_trim(args[0]);
+          //execvp(str, args); 
+          execvp(args[0], args);
+        }
+        else {// Parent Process [Waits until the child process is finished.]
+          int childpid = waitpid(f, &status, 0);
+        }
       }
-      else { // Parent Process [Waits until the child process is finished.]
-        int childpid = waitpid(f, &status, 0);
-      }
-
     }
     return 0;
 }
+
+
