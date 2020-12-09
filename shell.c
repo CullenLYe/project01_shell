@@ -27,8 +27,14 @@ int main() {
       int f, status;
       f = fork();
       if (!f) { // Child Process [This execvp's the user's input.]
-        char **args = parse_args(buffer);
-        execvp(args[0], args);
+        if (!strncmp(buffer, "cd", 2)) { // Checks to see if the user used "cd".
+          char *dir = buffer+3; // Takes out the directory after the command "cd".
+          chdir(dir); // Changes directory.
+        }
+        else {
+          char **args = parse_args(buffer);
+          execvp(args[0], args);
+        }
       }
       else { // Parent Process [Waits until the child process is finished.]
         int childpid = waitpid(f, &status, 0);
