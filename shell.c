@@ -8,6 +8,7 @@
 char ** parse_args(char *line) {
   char **args = malloc(sizeof(char*)*100);
   char *p = line;
+
   int i;
   for (i=0; p!=NULL; i++) {
     args[i] = strsep(&p, " ");
@@ -30,8 +31,19 @@ char ** semi_sep(char *line) {
   return commands;
 }
 
-// removes " " from front and end of string
-char * str_trim(char *line) {
+// function for trimming string input
+char * trim(char *line) {
+  int size;
+  int j = 0;
+  for (size = 0; line[size]!=0; size++);
+  if (line[size-1] == ' ') size--; 
+  if (line[0] == ' ') {j=1; size--;} 
+  char *ret = malloc(sizeof(char*)*size);
+  int i;
+  for (i = 0; i < size; i++) {
+    ret[i] = line[i+j];
+  }
+  return ret;
 }
 
 int main() {
@@ -58,9 +70,8 @@ int main() {
             printf("No such directory: '%s'\n", dir);
           }
           else {
-            char **args = parse_args(commands[i]);
-            //char *str = str_trim(args[0]);
-            //execvp(str, args); 
+            char *str = trim(commands[i]);
+            char **args = parse_args(str); 
             execvp(args[0], args);
           }
         }
