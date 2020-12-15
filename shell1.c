@@ -25,12 +25,14 @@ void runcmd(char *command) { // Runs each respective command.
     char **args = semi_sep(command, " ");
     if (!strcmp(args[0], "exit")) exit(0);
     else if (!strcmp(args[0], "cd")) 
-      if (chdir(args[1]) == -1) printf("Invalid directory: %d  MSG: %s\n", errno, strerror(errno));
+      if (chdir(args[1]) == -1) printf("Invalid directory.  MSG: %s\n", strerror(errno));
       else ;
     else {
         int f = fork();
         if (f)  wait(&status);
-        else if (execvp(args[0], args) == -1) exit(0);
+        else if (execvp(args[0], args) == -1) {
+          printf("Invalid command.  MSG: %s\n", strerror(errno));
+          exit(0);}
     }
 }
 
