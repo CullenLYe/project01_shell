@@ -4,6 +4,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <limits.h>
+#include <errno.h>
 
 // function for separating multiple commands on one line
 char ** semi_sep(char *line, char *delimiter) {
@@ -23,7 +24,9 @@ void runcmd(char *command) { // Runs each respective command.
     int status;
     char **args = semi_sep(command, " ");
     if (!strcmp(args[0], "exit")) exit(0);
-    else if (!strcmp(args[0], "cd")) chdir(args[1]);
+    else if (!strcmp(args[0], "cd")) 
+      if (chdir(args[1]) == -1) printf("Invalid directory: %d  MSG: %s\n", errno, strerror(errno));
+      else ;
     else {
         int f = fork();
         if (f)  wait(&status);
