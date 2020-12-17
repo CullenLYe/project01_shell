@@ -1,8 +1,8 @@
 all: shell.o
-	gcc -o shell shell1.c
+	gcc -o shell shell.c
 
 shell.o: shell.c
-	gcc -c shell1.c
+	gcc -c shell.c
 
 run:
 	./shell
