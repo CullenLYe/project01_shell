@@ -36,22 +36,3 @@ void runcmd(char *command) { // Runs each respective command.
     }
 }
 
-int main() {
-    while (1) {
-      char cwd[PATH_MAX];
-      getcwd(cwd, sizeof(cwd));
-      printf("ttmsh:%s$ ", cwd); // Shell prompt with current working directory.
-      char buffer[100];
-      fgets(buffer, sizeof(buffer), stdin); // Receives input from user.
-      size_t len = strlen(buffer)-1;
-      if (buffer[len]=='\n') buffer[len] = '\0'; // Removes the trailing newline from input.
-
-      int f, status, t;
-      char **commands = semi_sep(buffer, ";");
-      int i;
-      for (i = 0; commands[i]!=NULL; i++) {
-        runcmd(commands[i]);
-      }
-    }
-    return 0;
-}

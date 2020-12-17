@@ -1,11 +1,14 @@
-all: shell.o
-	gcc -o shell shell.c
+all: main.o shell.o
+	gcc -o shell_program main.o shell.o
 
-shell.o: shell.c
+main.o: main.c shell.h 
+	gcc -c main.c 
+
+shell.o: shell.c shell.h
 	gcc -c shell.c
 
 run:
-	./shell
+	./shell_program
 
 clean:
 	rm *.o
