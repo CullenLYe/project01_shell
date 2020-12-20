@@ -20,7 +20,6 @@ int main() {
       char **commands = parse_commands(buffer, ";");
       int i;
       for (i = 0; commands[i]!=NULL; i++) {
-        //runcmd(commands[i]);
         redirect(commands[i]);
       }
     }

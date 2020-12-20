@@ -25,7 +25,7 @@ void runcmd(char *command) { // Runs each respective command
     int status;
     char **args = parse_commands(command, " ");
     if (!strcmp(args[0], "exit")) exit(0);
-    if (!strcmp(args[0], "exit")) exit(0);
+    //if (!strcmp(args[0], "exit")) exit(0);
     else if(strstr(command,"|") != NULL){ 
       // anything with spaces won't work 
       // ls|wc does work
@@ -64,8 +64,8 @@ void copy_str(char *target, char *source) {
   *target = '\0';
 }
 
-// redirection and piping function
-void redirect(char *command) {
+// redirect function helper
+void redirect2(char *command) {
     char *a = malloc(sizeof(char*)*100);
     char *b = malloc(sizeof(char*)*100);
     copy_str(a, command);
@@ -76,9 +76,37 @@ void redirect(char *command) {
 
     int i;
     for (i = 0; args[i]; i++) {
-      // checking for redirection (only one redirection per command)
+      if (!strcmp(args[i], "<")) {
+        char **args1 = parse_commands(a, "<");
+        char **filename = parse_commands(args1[1], " ");
+        int fd1 = open(filename[0], O_RDONLY);
+        if (fd1 == -1) printf("Error: %s\n", strerror(errno));
+        else {
+          int backup_stdout = dup(STDOUT_FILENO);
+          dup2(fd1, STDIN_FILENO);
+          runcmd(args1[0]);
+          dup2(backup_stdout, STDIN_FILENO);
+          close(fd1);
+        }
+        not_loop = 0;
+        break;
+      }
+    }
 
-      // doesn't exactly work for >
+    if (not_loop) runcmd(b);
+}
+
+// redirection and piping function
+void redirect(char *command) {
+    char *a = malloc(sizeof(char*)*100);
+    char *b = malloc(sizeof(char*)*100);
+    copy_str(a, command);
+    copy_str(b, command);
+    char **args = parse_commands(command, " ");
+
+    int not_loop, not_loop2 = 1;
+    int i;
+    for (i = 0; args[i]; i++) {
       if (!strcmp(args[i], ">") || !strcmp(args[i], ">>")) {
         char **args1 = parse_commands(a, ">");
         char **filename = parse_commands(args1[1], " ");
@@ -89,31 +117,13 @@ void redirect(char *command) {
         else {
           int backup_stdout = dup(STDOUT_FILENO);
           dup2(fd, STDOUT_FILENO);
-          runcmd(args1[0]);
+          redirect2(args1[0]);
           dup2(backup_stdout, STDOUT_FILENO);
           close(fd);
         }
         not_loop = 0;
       }
-      
-      else if (!strcmp(args[i], "<")) {
-        char **args1 = parse_commands(a, "<");
-        char **filename = parse_commands(args1[1], " ");
-        int fd = open(filename[0], O_RDONLY);
-        if (fd == -1) printf("Error: %s\n", strerror(errno));
-        else {
-          int backup_stdout = dup(STDOUT_FILENO);
-          dup2(fd, STDIN_FILENO);
-          runcmd(args1[0]);
-          dup2(backup_stdout, STDIN_FILENO);
-          close(fd);
-        }
-        not_loop = 0;
-      }
     }
-    
-    if (not_loop) runcmd(b);
+
+    if (not_loop) redirect2(b);
 }
-
-
-

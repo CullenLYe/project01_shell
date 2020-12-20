@@ -10,6 +10,9 @@ void copy_str(char *target, char *source);
 // runs a command based on string input 
 void runcmd(char *command);
 
+// redirect function helper
+void redirect2(char *command, char *f_name);
+
 // implements redirection 
 void redirect(char *command);
 
