@@ -16,12 +16,12 @@ int main() {
       fgets(buffer, sizeof(buffer), stdin); // Receives input from user.
       size_t len = strlen(buffer)-1;
       if (buffer[len]=='\n') buffer[len] = '\0'; // Removes the trailing newline from input.
-
       int f, status, t;
-      char **commands = semi_sep(buffer, ";");
+      char **commands = parse_commands(buffer, ";");
       int i;
       for (i = 0; commands[i]!=NULL; i++) {
-        runcmd(commands[i]);
+        //runcmd(commands[i]);
+        redirect(commands[i]);
       }
     }
     return 0;
