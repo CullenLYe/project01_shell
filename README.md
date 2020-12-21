@@ -4,16 +4,19 @@ TNPG: The Three Musketeers
 
 ### Features:
 - Forks and executes commands.
-- Parses multiple commands on one line.
+- Parses multiple commands on one line, using ";".
+- Redirection with >, <, >>.
+- Piping with |.
 
 ---
 
 ### Attempted:
-
+ * Tried to allow two redirections in the same command, as in: "tr a-z A-Z < file > another_file"
+    * Doesn't work if another_file is already created.
 ---
 
 ### Bugs:
-
+ 
 ---
 
 ### Files & Function Headers:
@@ -59,3 +62,6 @@ TNPG: The Three Musketeers
   Just a helper function for redirect().
   ====================*/
   ```
+
+#### shell.h
+  * Header file for shell.c
