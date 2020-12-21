@@ -54,7 +54,7 @@ TNPG: The Three Musketeers
   Inputs:  char *command
   Returns: N/A
 
-  Directly handles redirection and piping.
+  Directly handles redirection.
   ====================*/
   
    /*======== void redirect2() ==========
