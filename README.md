@@ -24,7 +24,9 @@ TNPG: The Three Musketeers
 ### Files & Function Headers:
 #### main.c
   * Runs the shell.
-  * Reads in commands.
+  * Displays current directory in the prompt.
+  * Allows the user to type into stdin.
+  * Reads in commands & sends them off to be interpreted.
   
 #### shell.c
   * Interprets all the different commands and directly runs them.
