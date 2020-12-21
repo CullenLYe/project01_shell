@@ -3,7 +3,9 @@ by Jacky Chen, Vincent Jiang, and Cullen Ye\
 TNPG: The Three Musketeers
 
 ### Features:
+- Shell prompt shows your current directory.
 - Forks and executes commands.
+   - Specifically accounts for "exit", cd, redirection, and piping.
 - Parses multiple commands on one line, using ";".
 - Redirection with >, <, >>.
 - Piping with |.
@@ -16,7 +18,7 @@ TNPG: The Three Musketeers
 ---
 
 ### Bugs:
- 
+ * Limited to 100 characters per line of command.
 ---
 
 ### Files & Function Headers:
@@ -64,4 +66,4 @@ TNPG: The Three Musketeers
   ```
 
 #### shell.h
-  * Header file for shell.c
+  * Header file for shell.c.
