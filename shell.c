@@ -34,7 +34,7 @@ void runcmd(char *command) { // Runs each respective command
       else{        
         FILE *fp, *fo;
         int i = 1;
-        char buff[80];
+        char buff[100];
         char commx[100];
         strcpy(commx,comm);
         char *z = strstr(commx,"|");
