@@ -7,7 +7,7 @@ char ** parse_commands(char *line, char *delimiter);
 // copies string 
 void copy_str(char *target, char *source);
 
-// runs a command based on string input 
+// runs a command based on string input. implements piping
 void runcmd(char *command);
 
 // redirect function helper
