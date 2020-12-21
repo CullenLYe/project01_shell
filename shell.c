@@ -35,20 +35,21 @@ void runcmd(char *command) { // Runs each respective command
         FILE *fp, *fo;
         int i = 1;
         char buff[80];
+        char commx[100];
+        strcpy(commx,comm);
+        char *z = strstr(commx,"|");
+        z+=1;
         char **coms = parse_commands(comm, "|");
         if ((fp = popen(coms[0], "r")) == NULL){
                 perror("popen");
                 exit(0);
         }
-        while(coms[i] != NULL){
-          if ((fo = popen(coms[i], "w")) == NULL){
+          if ((fo = popen(z, "w")) == NULL){
                 perror("popen");
                 exit(0);
           }
           while(fgets(buff, sizeof(buff), fp))
                 fputs(buff, fo);
-          i++;
-        }
         pclose(fo);
         pclose(fp);
         exit(0);
